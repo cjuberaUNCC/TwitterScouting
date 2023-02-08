@@ -1,6 +1,7 @@
 import pandas as pd
 import tweepy
 import configparser
+import numpy as np
 
 
 followed_user_ids = pd.read_csv("temp_ids.csv")
@@ -26,7 +27,12 @@ client = tweepy.Client(
     access_token=access_token, 
     access_token_secret=access_token_secret)
 
-user_ids = followed_user_ids.Courses.values.tolist()
+user_ids = followed_user_ids['id'].values.tolist()
 
-for user_index, user in followed_user_ids.itertools():
-    user_data = client.get_users(ids=user_ids, extentions=["id", "name", ""]).data
+# TODO fix on 2/8/2023
+# for user_index, user in followed_user_ids.iterrows():
+#     user_data = client.get_users(ids=user_ids, extentions=["id", "name", "description"]).data
+#     followed_user_ids["name"][user_index] == user_data[user_index].name
+#     followed_user_ids["description"][user_index] == user_data[user_index].description
+
+
