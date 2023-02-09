@@ -37,9 +37,11 @@ def get_followed_ids(coaches_df:pd.DataFrame, num_followers:int):
         # create following list for current coach
         following = []
         # create list of following accounts if >1000 
-        for response in tweepy.Paginator(client.get_users_following, id=coaches_df['twitter_id'][row_index],user_fields=["id"],max_results=1000,limit=2):
-            # TODO: add counter for number of twitter requested used
-            following += [(response.data[x].id) for x in range(len(response.data))]
+        try:
+            for response in tweepy.Paginator(client.get_users_following, id=coaches_df['twitter_id'][row_index],user_fields=["id"],max_results=1000,limit=2):
+                following += [(response.data[x].id) for x in range(len(response.data))]
+        except tweepy.errors.TooManyRequest as toomanyrequest:
+            st.warning("You have done too many requests. Try again in approximately 15 minutes.")
         # add following list to coaches data frame
         coaches_df["engaged"][row_index] = following
         # add current coaches to all following
