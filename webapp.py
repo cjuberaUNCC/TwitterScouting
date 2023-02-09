@@ -44,3 +44,6 @@ if st.button('Run'):
     st.write(account_twitter_final)
     st.markdown("### Accounts with no bio")
     st.write(dropped_accounts)
+
+ 
+# TODO try except for too many requests
