@@ -42,7 +42,7 @@ def get_followed_ids(coaches_df:pd.DataFrame, num_followers:int):
                 following += [(response.data[x].id) for x in range(len(response.data))]
         except tweepy.errors.TooManyRequests as toomanyrequests:
             st.warning("You have done too many requests. Try again in approximately 15 minutes.")
-            exit
+            exit()
         # add following list to coaches data frame
         coaches_df["engaged"][row_index] = following
         # add current coaches to all following
