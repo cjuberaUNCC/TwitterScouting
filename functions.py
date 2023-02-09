@@ -41,7 +41,7 @@ def get_followed_ids(coaches_df:pd.DataFrame, num_followers:int):
             for response in tweepy.Paginator(client.get_users_following, id=coaches_df['twitter_id'][row_index],user_fields=["id"],max_results=1000,limit=2):
                 following += [(response.data[x].id) for x in range(len(response.data))]
         except tweepy.errors.TooManyRequests as toomanyrequests:
-            st.warning("You have done too many requests. Try again in approximately 15 minutes.")
+            st.warning("Twitter API limits request. Try again in approximately 15 minutes.")
             exit()
         # add following list to coaches data frame
         coaches_df["engaged"][row_index] = following
@@ -62,7 +62,7 @@ def add_names_and_descriptions(player_id_df:pd.DataFrame):
         try:
             user_data = client.get_users(ids=list_section, user_fields=["description"]).data
         except tweepy.errors.TooManyRequests as toomanyrequests:
-            st.warning("You have done too many requests. Try again in approximately 15 minutes.")
+            st.warning("Twitter API limits request. Try again in approximately 15 minutes.")
             exit()
         for user_index in range(len(user_data)):
             names.append(user_data[user_index].name)
@@ -106,7 +106,7 @@ def create_coaches_df(usernames):
     try:
         users = client.get_users(usernames=usernames, user_fields=["id"])
     except tweepy.errors.TooManyRequests as toomanyrequests:
-            st.warning("You have done too many requests. Try again in approximately 15 minutes.")
+            st.warning("Twitter API limits request. Try again in approximately 15 minutes.")
             exit()
     # create coaches dataframe that holds twitter ids, names, and following list
     coaches_df = pd.DataFrame(columns=["engaged"])
@@ -126,7 +126,7 @@ def get_liked_account_info(coaches_df:pd.DataFrame, num_liked:int):
             for response in tweepy.Paginator(client.get_liked_tweets, id=coaches_df['twitter_id'][row_index],tweet_fields=["author_id"],max_results=results_per_page,limit=pages):
                 liked_account_ids += [(response.data[x].author_id) for x in range(len(response.data))]
         except tweepy.errors.TooManyRequests as toomanyrequests:
-            st.warning("You have done too many requests. Try again in approximately 15 minutes.")
+            st.warning("Twitter API limits request. Try again in approximately 15 minutes.")
             exit()
         # add following list to coaches data frame
         coaches_df["engaged"][row_index] = liked_account_ids
