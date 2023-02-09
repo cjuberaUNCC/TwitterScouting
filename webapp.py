@@ -35,8 +35,12 @@ if st.button('Run'):
     account_twitter_details = func.add_names_and_descriptions(account_twitter_ids)
     account_twitter_details_filtered, dropped_accounts = func.filter_users(account_twitter_details, filter_words_list, and_or=filter_bool)
     account_twitter_final = func.get_followed_by(account_twitter_details_filtered, coaches_interacted_df)
-
+    dropped_accounts_final = func.get_followed_by(dropped_accounts, coaches_interacted_df)
+    account_twitter_final.drop(["id"], axis=1, inplace=True)
+    account_twitter_final = account_twitter_final[["name", "engagement_count", "description", "coaches_engaged"]]
+    dropped_accounts_final.drop(["id","description"], axis=1, inplace=True)
+    dropped_accounts_final = dropped_accounts_final[["name", "engagement_count", "coaches_engaged"]]
     st.markdown("### Accounts that have been interacted with ")
     st.write(account_twitter_final)
-    st.markdown("### Accounts with no bios")
+    st.markdown("### Accounts with no bio")
     st.write(dropped_accounts)
