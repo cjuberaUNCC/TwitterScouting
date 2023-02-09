@@ -1,6 +1,5 @@
 
 numpy==1.24.2
-oauthlib==3.2.2
 pandas==1.5.3
 streamlit==1.17.0
 tweepy==4.12.1
