@@ -3,6 +3,7 @@ import configparser
 import pandas as pd
 from collections import Counter
 import re
+import streamlit as st
 
 pd.set_option('mode.chained_assignment', None)
 # to bring back SetWithCopyWarning
@@ -12,14 +13,14 @@ pd.set_option('mode.chained_assignment', None)
 config = configparser.ConfigParser(interpolation=None)
 config.read('config.ini')
 
-api_key = config['twitter']['api_key']
-api_key_secret = config['twitter']['api_key_secret']
+api_key = st.secrets['api_key']
+api_key_secret = st.secrets['api_key_secret']
 
-bearer_token = config['twitter']['bearer_token']
+bearer_token = st.secrets['bearer_token']
 
 
-access_token = config['twitter']['access_token']
-access_token_secret = config['twitter']['access_token_secret']
+access_token = st.secrets['access_token']
+access_token_secret = st.secrets['access_token_secret']
 
 # authentication 
 client = tweepy.Client(
